@@ -96,9 +96,221 @@ footer{padding:80px 0 56px;overflow:hidden}
 .foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;color:var(--mu);font-size:14px;max-width:1320px}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0));transform:translate(-50%,30px);background:var(--tx);color:#000;padding:12px 20px;border-radius:99px;font-weight:600;font-size:14px;opacity:0;transition:.3s;z-index:40}#toast.show{opacity:1;transform:translate(-50%,0)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero h1 span,.fade,.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* ── Setu language + voice welcome screen ── */
+:root{--welcome-bg:#101011;--welcome-panel:#1a1b1e;--welcome-soft:#202125;--welcome-blue:#68a8ff;--welcome-muted:#999ba3}
+body.welcome-open{overflow:hidden}
+#welcomeScreen{position:fixed;inset:0;z-index:999;background:var(--welcome-bg);color:#f2f2f4;font-family:"Schibsted Grotesk",system-ui,sans-serif;overflow:hidden;opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
+#welcomeScreen.dismissed{opacity:0;visibility:hidden;pointer-events:none}
+.welcome-top{height:54px;position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:0 30px;z-index:5}
+.welcome-logo{font-size:20px;font-weight:700;letter-spacing:-1px}
+.welcome-current{border:1px solid #303136;border-radius:30px;padding:9px 17px;color:#c6c7ce;font-size:13px;background:transparent}
+.welcome-main{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(770px,calc(100% - 420px));margin-left:-140px;padding:0 0 30px}
+.welcome-title{font-size:clamp(42px,4.1vw,58px);font-weight:500;line-height:1.22;letter-spacing:-2.4px;margin:0 0 48px;color:#92939a}
+.welcome-title .hello{display:block;background:linear-gradient(95deg,#68a8ff 5%,#b078df 65%,#f07d91);background-clip:text;-webkit-background-clip:text;color:transparent;margin-bottom:4px}
+.welcome-label{display:block;font-size:13px;color:#9698a1;letter-spacing:.07em;font-weight:600;text-transform:uppercase;margin-bottom:14px}
+.welcome-languages{display:grid;grid-template-columns:1fr 1fr;column-gap:18px;row-gap:5px}
+.welcome-language{display:flex;align-items:center;gap:14px;min-height:48px;padding:0 16px;border-radius:18px;cursor:pointer;transition:background .2s ease,transform .2s ease}
+.welcome-language:hover{background:#1b1c20}
+.welcome-language.selected{background:#202125}
+.welcome-language input{appearance:none;width:20px;height:20px;border:1px solid #60636b;border-radius:50%;margin:0;flex:0 0 20px;display:grid;place-items:center}
+.welcome-language input:checked{border:2px solid var(--welcome-blue)}
+.welcome-language input:checked:after{content:"";width:10px;height:10px;border-radius:50%;background:var(--welcome-blue)}
+.welcome-language .lang-name{font-size:15px;font-weight:600;color:#e0e0e4}
+.welcome-language .lang-native{margin-left:auto;color:#a0a1a8;font-size:18px;font-family:"Nirmala UI","Noto Sans",sans-serif}
+.welcome-enter{margin-top:38px;min-width:161px;height:49px;border:0;border-radius:28px;background:#e9eaed;color:#111216;font:600 14px "Schibsted Grotesk",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:13px;cursor:pointer;transition:transform .2s,background .2s}
+.welcome-enter:hover{background:white;transform:translateY(-2px)}
+.welcome-enter:active{transform:scale(.97)}
+.welcome-enter span{font-size:18px;font-weight:400}
+.welcome-agent-panel{position:absolute;right:22px;top:77px;width:307px;padding:13px 14px 15px;border:1px solid #303136;border-radius:25px;background:#1a1b1e;box-shadow:0 18px 55px #0005;z-index:4;animation:welcomePanelIn .65s .18s both}
+@keyframes welcomePanelIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.welcome-panel-head{display:flex;align-items:center;justify-content:space-between;padding:4px 5px 11px}
+.welcome-panel-head strong{font-size:13px;letter-spacing:.07em;color:#a3a5ad}
+.welcome-panel-head button{border:0;background:none;color:#a3a5ad;font-size:20px;cursor:pointer;line-height:1}
+.welcome-agents{display:grid;gap:4px}
+.welcome-agent{width:100%;border:0;background:transparent;color:#eee;text-align:left;display:flex;align-items:center;gap:14px;padding:12px;border-radius:17px;cursor:pointer;transition:background .2s}
+.welcome-agent:hover{background:#222328}
+.welcome-agent.active{background:#222328}
+.agent-avatar{height:35px;width:35px;border-radius:50%;display:grid;place-items:center;background:#2c2d32;color:#d8d9de;font-size:12px;font-weight:600;flex:0 0 35px;transition:background .2s,color .2s}
+.welcome-agent.active .agent-avatar{background:#68a8ff;color:#101114}
+.agent-meta{min-width:0;display:grid;gap:2px}
+.agent-meta b{font-size:14px;font-weight:600}
+.agent-meta small{font-size:12px;color:#a0a1a8}
+.agent-dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:#68a8ff;opacity:0}
+.welcome-agent.active .agent-dot{opacity:1}
+.welcome-player{position:absolute;left:0;right:0;bottom:0;height:80px;border-top:1px solid #292a2e;background:rgba(16,16,17,.96);display:grid;grid-template-columns:1fr 1.8fr 1fr;align-items:center;padding:0 4.7%;gap:22px;z-index:5}
+.player-track{display:flex;align-items:center;gap:14px;min-width:0}
+.player-cover{width:53px;height:53px;display:grid;place-items:center;background:#222328;border-radius:5px;font-size:15px;font-weight:600;color:#d5d6db;flex:0 0 53px}
+.player-track-text{min-width:0;display:grid;gap:2px}
+.player-track-text b{font-size:14px;font-weight:600}
+.player-track-text small{font-size:12px;color:#a1a2aa}
+.player-center{display:grid;justify-items:center;gap:7px;min-width:0}
+.player-play{height:39px;width:39px;border:0;border-radius:50%;background:#e7e8eb;color:#17181b;display:grid;place-items:center;cursor:pointer;transition:transform .2s}
+.player-play:hover{transform:scale(1.07)}
+.player-play svg{width:13px;height:13px}
+.player-progress{display:flex;align-items:center;gap:9px;width:100%;font-size:11px;color:#9b9ca4;font-variant-numeric:tabular-nums}
+.player-progress-track{height:4px;background:#34353a;border-radius:5px;overflow:hidden;flex:1}
+.player-progress-fill{height:100%;width:0;background:#e4e5e8;border-radius:5px;transition:width .12s linear}
+.player-eq{display:flex;justify-content:flex-end;align-items:center;gap:3px}
+.player-eq i{display:block;width:3px;height:13px;background:#62646c;border-radius:4px}
+.player-eq.active i{animation:welcomeEq .55s ease-in-out infinite alternate}
+.player-eq i:nth-child(2){animation-delay:.1s}.player-eq i:nth-child(3){animation-delay:.22s}.player-eq i:nth-child(4){animation-delay:.3s}.player-eq i:nth-child(5){animation-delay:.16s}
+@keyframes welcomeEq{to{height:4px}}
+.welcome-status{position:absolute;left:50%;bottom:89px;transform:translateX(-50%);font-size:11px;color:#a5a6ad;white-space:nowrap;max-width:90%;overflow:hidden;text-overflow:ellipsis}
+.welcome-status.error{color:#ff9292}
+.welcome-peek{position:absolute;right:0;top:73%;border:1px solid #36373b;border-right:0;border-radius:22px 0 0 22px;background:#151619;color:#ddd;padding:12px 10px;cursor:pointer;z-index:3}
+@media(max-width:900px){
+ .welcome-main{width:min(690px,calc(100% - 48px));margin-left:0;top:48%;left:24px;transform:translateY(-50%);padding-top:30px}
+ .welcome-agent-panel{right:16px;top:65px;width:260px}
+ .welcome-title{font-size:clamp(37px,5vw,48px);max-width:570px}
+}
+@media(max-width:650px){
+ .welcome-top{padding:0 18px}
+ .welcome-main{top:70px;left:0;right:0;transform:none;width:auto;margin:0;padding:15px 20px 100px;max-height:calc(100% - 165px);overflow:auto}
+ .welcome-title{font-size:clamp(34px,9vw,45px);letter-spacing:-1.6px;margin-bottom:27px}
+ .welcome-languages{column-gap:5px;row-gap:3px}
+ .welcome-language{padding:0 8px;gap:8px;min-height:44px}
+ .welcome-language .lang-name{font-size:13px}
+ .welcome-language .lang-native{font-size:14px}
+ .welcome-agent-panel{top:auto;right:12px;bottom:95px;width:220px;padding:10px;border-radius:19px}
+ .welcome-panel-head{padding-bottom:5px}
+ .welcome-agent{padding:8px}
+ .agent-avatar{width:29px;height:29px;flex-basis:29px}
+ .welcome-player{height:74px;padding:0 14px;grid-template-columns:1fr auto;gap:10px}
+ .player-cover{width:42px;height:42px;flex-basis:42px}
+ .player-center{grid-template-columns:auto;gap:0}
+ .player-progress,.player-eq{display:none}
+ .player-play{width:38px;height:38px}
+ .welcome-status{bottom:78px;left:15px;transform:none;text-align:left}
+ .welcome-enter{margin-top:24px}
+}
+@media(prefers-reduced-motion:reduce){#welcomeScreen *,#welcomeScreen *:before{animation:none!important;transition:none!important}}
+
+
+/* ── Voice panel spring motion + post-greeting CTA ── */
+.welcome-agent-panel{
+  transform-origin:top right;
+  animation:voicePanelSpring .92s cubic-bezier(.18,1.42,.32,1) both;
+}
+@keyframes voicePanelSpring{
+  0%{opacity:0;transform:translate3d(70px,-12px,0) scale(.82)}
+  58%{opacity:1;transform:translate3d(-9px,3px,0) scale(1.035)}
+  78%{transform:translate3d(4px,-1px,0) scale(.99)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+.welcome-agent{
+  position:relative;
+  transform:translateY(0);
+  transition:background .22s ease,transform .28s cubic-bezier(.2,.9,.25,1),box-shadow .28s ease;
+}
+.welcome-agent:hover{transform:translateY(-3px) scale(1.012);box-shadow:0 8px 20px #0003}
+.welcome-agent.active .agent-avatar{animation:avatarFloat 2.1s ease-in-out infinite;box-shadow:0 0 0 5px #68a8ff16}
+@keyframes avatarFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.welcome-agent.active .agent-dot{animation:dotPulse 1.5s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 #68a8ff66}50%{box-shadow:0 0 0 6px #68a8ff00}}
+.welcome-peek{
+  display:flex;align-items:center;gap:9px;
+  border:1px solid #36373b;border-right:0;border-radius:24px 0 0 24px;
+  background:#1a1b1e;color:#e7e8eb;padding:9px 12px 9px 10px;
+  font:600 12px var(--f);box-shadow:0 8px 24px #0005;
+  animation:peekFloat 2.6s ease-in-out infinite;
+}
+.peek-avatar{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#68a8ff;color:#111;font-size:11px}
+.peek-chevron{color:#9da0a8;font-size:14px;margin-left:2px}
+@keyframes peekFloat{0%,100%{transform:translateX(0)}50%{transform:translateX(-4px)}}
+
+/* CTA rises into view as soon as the user presses Play. */
+.welcome-enter[hidden]{display:none!important}
+.welcome-enter{
+  position:absolute;z-index:8;left:50%;bottom:99px;margin:0;
+  min-width:174px;height:50px;padding:0 25px;
+  border:1px solid #f2f3f5;border-radius:999px;
+  background:linear-gradient(135deg,#fff,#e5e7eb);
+  color:#111216;font:600 14px var(--f);
+  display:inline-flex;align-items:center;justify-content:center;gap:14px;
+  box-shadow:0 10px 36px #0008,0 0 0 1px #ffffff20;
+  cursor:pointer;opacity:0;visibility:hidden;
+  transform:translate(-50%,32px) scale(.82);
+}
+.welcome-enter.show{
+  visibility:visible;
+  animation:enterFromPlayer .88s cubic-bezier(.16,1.45,.3,1) forwards;
+}
+@keyframes enterFromPlayer{
+  0%{opacity:0;transform:translate(-50%,35px) scale(.78);filter:blur(5px)}
+  58%{opacity:1;transform:translate(-50%,-9px) scale(1.045);filter:blur(0)}
+  78%{transform:translate(-50%,3px) scale(.985)}
+  100%{opacity:1;transform:translate(-50%,0) scale(1)}
+}
+.welcome-enter:hover{background:#fff;box-shadow:0 12px 42px #0009,0 0 28px #68a8ff25}
+.welcome-enter span{font-size:19px;font-weight:400;transition:transform .2s}
+.welcome-enter:hover span{transform:translateX(4px)}
+.welcome-status{transition:bottom .35s ease}
+#welcomeScreen.cta-visible .welcome-status{bottom:158px}
+@media(max-width:650px){
+  .welcome-enter{bottom:88px;min-width:158px;height:46px}
+  #welcomeScreen.cta-visible .welcome-status{bottom:145px}
+  .welcome-agent-panel{animation-name:voicePanelSpring}
+}
+@media(prefers-reduced-motion:reduce){
+  .welcome-agent-panel,.welcome-agent.active .agent-avatar,.welcome-agent.active .agent-dot,.welcome-peek,.welcome-enter.show{animation:none!important}
+  .welcome-enter.show{opacity:1;visibility:visible;transform:translateX(-50%)}
+}
+
 </style>
 </head>
-<body>
+<body class="welcome-open">
+
+<div id="welcomeScreen" aria-label="Setu welcome">
+  <header class="welcome-top">
+    <div class="welcome-logo">Setu</div>
+    <div class="welcome-current" id="welcomeCurrent">Voice · Aarav</div>
+  </header>
+
+  <main class="welcome-main">
+    <h1 class="welcome-title"><span class="hello">Hello there.</span>Which language should we speak?</h1>
+    <fieldset style="border:0;padding:0;margin:0">
+      <legend class="welcome-label">Language</legend>
+      <div class="welcome-languages" id="welcomeLanguages">
+        <label class="welcome-language selected"><input type="radio" name="welcomeLang" value="en-IN" checked><span class="lang-name">English</span><span class="lang-native">English</span></label>
+        <label class="welcome-language"><input type="radio" name="welcomeLang" value="hi-IN"><span class="lang-name">Hindi</span><span class="lang-native">हिन्दी</span></label>
+        <label class="welcome-language"><input type="radio" name="welcomeLang" value="te-IN"><span class="lang-name">Telugu</span><span class="lang-native">తెలుగు</span></label>
+        <label class="welcome-language"><input type="radio" name="welcomeLang" value="ta-IN"><span class="lang-name">Tamil</span><span class="lang-native">தமிழ்</span></label>
+        <label class="welcome-language"><input type="radio" name="welcomeLang" value="bn-IN"><span class="lang-name">Bengali</span><span class="lang-native">বাংলা</span></label>
+      </div>
+    </fieldset>
+  </main>
+
+  <aside class="welcome-agent-panel" id="welcomeAgentPanel">
+    <div class="welcome-panel-head"><strong>CHOOSE A VOICE</strong><button type="button" id="welcomePanelClose" aria-label="Close voice panel">×</button></div>
+    <div class="welcome-agents" id="welcomeAgents">
+      <button class="welcome-agent active" type="button" data-agent="aarav"><span class="agent-avatar">A</span><span class="agent-meta"><b>Aarav</b><small>Calm, warm</small></span><span class="agent-dot"></span></button>
+      <button class="welcome-agent" type="button" data-agent="meera"><span class="agent-avatar">M</span><span class="agent-meta"><b>Meera</b><small>Bright, friendly</small></span><span class="agent-dot"></span></button>
+      <button class="welcome-agent" type="button" data-agent="kabir"><span class="agent-avatar">K</span><span class="agent-meta"><b>Kabir</b><small>Clear, assured</small></span><span class="agent-dot"></span></button>
+      <button class="welcome-agent" type="button" data-agent="anaya"><span class="agent-avatar">A</span><span class="agent-meta"><b>Anaya</b><small>Soft, gentle</small></span><span class="agent-dot"></span></button>
+    </div>
+  </aside>
+
+  <button class="welcome-peek" id="welcomePeek" type="button" aria-label="Open voice choices" hidden><span class="peek-avatar">A</span><span>Voices</span><span class="peek-chevron">↗</span></button>
+
+  <div class="welcome-status" id="welcomeStatus" role="status" aria-live="polite">Choose a language and press play to hear your greeting.</div>
+
+  <footer class="welcome-player">
+    <div class="player-track">
+      <div class="player-cover" id="playerCover">A</div>
+      <div class="player-track-text"><b>Greeting</b><small id="playerSubtitle">Aarav · English</small></div>
+    </div>
+    <div class="player-center">
+      <button class="player-play" id="welcomePlay" type="button" aria-label="Play greeting">
+        <svg id="welcomePlayIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="player-progress"><span id="welcomeElapsed">0:00</span><div class="player-progress-track"><div class="player-progress-fill" id="welcomeProgress"></div></div><span id="welcomeDuration">0:00</span></div>
+    </div>
+    <div class="player-eq" id="welcomeEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  </footer>
+  <button class="welcome-enter" id="welcomeEnter" type="button" hidden>Enter Setu <span>→</span></button>
+</div>
+
 <header><div class="wrap"><nav>
 <a class="logo" href="#top"><svg viewBox="0 0 30 18" fill="none" stroke="#e8a838" stroke-width="2"><path d="M1 16C8 2 22 2 29 16M1 16h28"/></svg>Setu</a>
 <div class="links"><a href="#translate">Translate</a><a href="#process">Process</a><a href="#classroom">Classroom</a><a href="#history">History</a></div>
@@ -306,5 +518,262 @@ upd();draw();
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
+
+<script>
+/* Setu welcome: language-specific Sarvam Bulbul voices and animated audio onboarding. */
+(() => {
+  const $w = id => document.getElementById(id);
+  const langNames = {
+    "en-IN":"English","hi-IN":"Hindi","te-IN":"Telugu","ta-IN":"Tamil","bn-IN":"Bengali"
+  };
+  const greetings = {
+    "en-IN":"A new language can open a hundred doors. I'm Setu. Bring me a word, a question, or a whole story, and we'll find the way together. Ready when you are.",
+    "hi-IN":"एक नई भाषा, नए रास्तों की शुरुआत है। मैं सेतु हूँ। कोई शब्द हो, सवाल हो या पूरी कहानी—आइए, उसे साथ मिलकर समझें। जब आप तैयार हों, शुरू करें।",
+    "te-IN":"కొత్త భాష ఎన్నో కొత్త దారులు తెరుస్తుంది. నేను సేతును. ఒక మాటైనా, ప్రశ్నైనా, చిన్న కథైనా—మనిద్దరం కలిసి అర్థం చేసుకుందాం. మీరు సిద్ధమైనప్పుడు మొదలుపెడదాం.",
+    "ta-IN":"ஒரு புதிய மொழி பல புதிய கதவுகளைத் திறக்கும். நான் சேது. ஒரு சொல்லாக இருந்தாலும், கேள்வியாக இருந்தாலும், கதையாக இருந்தாலும்—நாம் சேர்ந்து புரிந்துகொள்வோம். தயாரானதும் தொடங்கலாம்.",
+    "bn-IN":"একটি নতুন ভাষা খুলে দিতে পারে অনেক নতুন দরজা। আমি সেতু। একটি শব্দ, একটি প্রশ্ন কিংবা একটি গল্প—চলুন, একসঙ্গে তার অর্থ খুঁজে নিই। আপনি প্রস্তুত হলেই শুরু করি।"
+  };
+
+  // Four friendly personas, each mapped only to speaker IDs in voices.json.
+  const agents = {
+    aarav:{
+      name:"Aarav",tone:"Calm, warm",
+      speakers:{"en-IN":"shubh","hi-IN":"shubh","te-IN":"shubh","ta-IN":"shubh","bn-IN":"shubh"}
+    },
+    meera:{
+      name:"Meera",tone:"Bright, friendly",
+      speakers:{"en-IN":"ishita","hi-IN":"ishita","te-IN":"ishita","ta-IN":"ishita","bn-IN":"roopa_bn_conversational"}
+    },
+    kabir:{
+      name:"Kabir",tone:"Clear, assured",
+      speakers:{"en-IN":"aditya","hi-IN":"aditya","te-IN":"aditya","ta-IN":"aditya","bn-IN":"arnab_bn_conversation"}
+    },
+    anaya:{
+      name:"Anaya",tone:"Soft, gentle",
+      speakers:{"en-IN":"ritu","hi-IN":"ritu","te-IN":"ritu","ta-IN":"ritu","bn-IN":"ishita"}
+    }
+  };
+
+  let language="en-IN", agentId="aarav", currentAudio=null, audioBusy=false;
+  let progressTimer=null, startedAt=0, duration=0, playbackToken=0, hasPlayed=false, resolvePlayback=null;
+  const langRadios=[...document.querySelectorAll('input[name="welcomeLang"]')];
+
+  function speakerForCurrentChoice(){ return agents[agentId].speakers[language]; }
+  function setStatus(message,error=false){
+    const el=$w("welcomeStatus");el.textContent=message;el.classList.toggle("error",error);
+  }
+  function setPlayIcon(playing){
+    $w("welcomePlayIcon").innerHTML=playing
+      ? '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>'
+      : '<path d="M8 5v14l11-7z"/>';
+    $w("welcomePlay").setAttribute("aria-label",playing?"Stop greeting":"Play greeting");
+    $w("welcomeEq").classList.toggle("active",playing);
+  }
+  function fmt(sec){
+    sec=Math.max(0,Math.floor(sec||0));
+    return "0:"+String(sec).padStart(2,"0");
+  }
+  function hideEnter(){
+    hasPlayed=false;
+    $w("welcomeEnter").classList.remove("show");
+    $w("welcomeEnter").hidden=true;
+    $w("welcomeScreen").classList.remove("cta-visible");
+  }
+  function revealEnter(){
+    hasPlayed=true;
+    const button=$w("welcomeEnter");
+    button.hidden=false;
+    // Force a layout frame so the entrance animation replays reliably.
+    button.classList.remove("show");
+    void button.offsetWidth;
+    button.classList.add("show");
+    $w("welcomeScreen").classList.add("cta-visible");
+  }
+  function updatePlayer(){
+    const a=agents[agentId];
+    $w("welcomeCurrent").textContent="Voice · "+a.name;
+    $w("playerCover").textContent=a.name[0];
+    $w("playerSubtitle").textContent=a.name+" · "+langNames[language];
+    const active=document.querySelector(".welcome-agent.active .agent-avatar");
+    if(active) $w("welcomePeek").querySelector(".peek-avatar").textContent=a.name[0];
+  }
+  function stopAudio(){
+    playbackToken++;
+    if(resolvePlayback){const finish=resolvePlayback;resolvePlayback=null;finish();}
+    if(currentAudio){
+      currentAudio.onended=null;currentAudio.onerror=null;
+      currentAudio.pause();currentAudio.currentTime=0;currentAudio=null;
+    }
+    if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
+    audioBusy=false;setPlayIcon(false);
+    $w("welcomeProgress").style.width="0%";
+    $w("welcomeElapsed").textContent="0:00";
+  }
+  function resetForNewChoice(){
+    stopAudio();hideEnter();
+    setStatus("Press play to hear "+agents[agentId].name+"'s greeting in "+langNames[language]+".");
+    updatePlayer();
+  }
+
+  async function playGreeting(){
+    if(audioBusy){
+      stopAudio();
+      setStatus("Greeting stopped. Press play when you're ready.");
+      return;
+    }
+    const lang=language, agent=agents[agentId], speaker=speakerForCurrentChoice();
+    const token=++playbackToken;
+    audioBusy=true;
+    $w("welcomePlay").disabled=false;
+    setPlayIcon(true);
+    // The user has chosen to preview the voice: let them enter Setu immediately,
+    // while the greeting continues playing in the background.
+    revealEnter();
+    setStatus("Preparing your greeting. You can enter Setu whenever you're ready.");
+
+    try{
+      const response=await fetch("/.netlify/functions/speak",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({text:greetings[lang],lang,speaker})
+      });
+      const data=await response.json().catch(()=>({}));
+      if(token!==playbackToken)return;
+      if(!response.ok)throw new Error(data.error||"Sarvam could not generate this voice.");
+      if(!Array.isArray(data.audios)||!data.audios.length)throw new Error("Sarvam returned an empty audio response.");
+
+      // The greeting is short, so the endpoint normally returns one WAV clip.
+      const audio=new Audio("data:audio/wav;base64,"+data.audios[0]);
+      currentAudio=audio;
+      audio.preload="auto";
+
+      await new Promise((resolve,reject)=>{
+        let settled=false;
+        const finish=(error)=>{
+          if(settled)return;
+          settled=true;
+          resolvePlayback=null;
+          error?reject(error):resolve();
+        };
+        resolvePlayback=()=>finish();
+        audio.onloadedmetadata=()=>{
+          duration=audio.duration||4;
+          $w("welcomeDuration").textContent=fmt(duration);
+        };
+        audio.onplay=()=>{
+          if(token!==playbackToken)return;
+          startedAt=Date.now();setPlayIcon(true);
+          setStatus("Now speaking in "+langNames[lang]+" · "+agent.name);
+          if(progressTimer)clearInterval(progressTimer);
+          progressTimer=setInterval(()=>{
+            if(!currentAudio||token!==playbackToken)return;
+            const elapsed=currentAudio.currentTime||((Date.now()-startedAt)/1000);
+            const total=currentAudio.duration||duration||4;
+            $w("welcomeElapsed").textContent=fmt(elapsed);
+            $w("welcomeProgress").style.width=Math.min(100,(elapsed/total)*100)+"%";
+          },100);
+        };
+        audio.onended=()=>finish();
+        audio.onerror=()=>finish(new Error("The greeting audio could not play. Try another voice or check your browser audio."));
+        audio.play().catch(finish);
+      });
+
+      if(token!==playbackToken)return;
+      if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
+      currentAudio=null;audioBusy=false;setPlayIcon(false);
+      $w("welcomeElapsed").textContent=fmt(duration);
+      $w("welcomeProgress").style.width="100%";
+      setStatus("Greeting complete. Your Setu experience is ready.");
+    }catch(error){
+      if(token!==playbackToken)return;
+      if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
+      currentAudio=null;audioBusy=false;setPlayIcon(false);
+      setStatus(error.message.includes("Failed to fetch")
+        ?"Can't reach the local Setu server. Run node server.js and try again."
+        :error.message,true);
+    }
+  }
+
+  langRadios.forEach(radio=>radio.addEventListener("change",()=>{
+    language=radio.value;
+    document.querySelectorAll(".welcome-language").forEach(label=>
+      label.classList.toggle("selected",label.contains(radio))
+    );
+    resetForNewChoice();
+  }));
+
+  document.querySelectorAll(".welcome-agent").forEach(button=>button.addEventListener("click",()=>{
+    agentId=button.dataset.agent;
+    document.querySelectorAll(".welcome-agent").forEach(b=>b.classList.toggle("active",b===button));
+    resetForNewChoice();
+  }));
+
+  $w("welcomePlay").addEventListener("click",playGreeting);
+
+  $w("welcomePanelClose").addEventListener("click",()=>{
+    $w("welcomeAgentPanel").hidden=true;
+    $w("welcomePeek").hidden=false;
+  });
+  $w("welcomePeek").addEventListener("click",()=>{
+    const panel=$w("welcomeAgentPanel");
+    panel.hidden=false;
+    panel.style.animation="none";
+    void panel.offsetWidth;
+    panel.style.animation="";
+    $w("welcomePeek").hidden=true;
+  });
+
+  $w("welcomeEnter").addEventListener("click",async()=>{
+    if(!hasPlayed)return;
+    stopAudio();
+    const speaker=speakerForCurrentChoice();
+    try{
+      localStorage.setItem("setu-preferred-language",language);
+      localStorage.setItem("setu-preferred-agent",agentId);
+      localStorage.setItem("setu-preferred-speaker",speaker);
+    }catch{}
+
+    // Keep the main translator's target language and voice aligned with onboarding.
+    const target=document.getElementById("tgt");
+    if(target){
+      target.value=language;
+      target.dispatchEvent(new Event("change",{bubbles:true}));
+    }
+    if(typeof loadVoices==="function"){
+      await loadVoices(language);
+      const mainVoice=document.getElementById("voice");
+      if(mainVoice && [...mainVoice.options].some(option=>option.value===speaker)){
+        mainVoice.value=speaker;
+      }
+    }
+
+    document.body.classList.remove("welcome-open");
+    $w("welcomeScreen").classList.add("dismissed");
+    setTimeout(()=>$w("welcomeScreen")?.remove(),500);
+  });
+
+  // Restore saved language/persona; the user can preview the greeting or enter after pressing Play.
+  try{
+    const savedLang=localStorage.getItem("setu-preferred-language");
+    const savedAgent=localStorage.getItem("setu-preferred-agent");
+    if(savedLang && langNames[savedLang]){
+      language=savedLang;
+      const radio=langRadios.find(item=>item.value===savedLang);
+      if(radio)radio.checked=true;
+    }
+    if(savedAgent && agents[savedAgent])agentId=savedAgent;
+  }catch{}
+
+  document.querySelectorAll(".welcome-language").forEach(label=>
+    label.classList.toggle("selected",label.querySelector("input").checked)
+  );
+  document.querySelectorAll(".welcome-agent").forEach(button=>
+    button.classList.toggle("active",button.dataset.agent===agentId)
+  );
+  updatePlayer();
+  setStatus("Choose your language and voice, then press play to hear your greeting.");
+})();
+</script>
+
 </body>
 </html>
