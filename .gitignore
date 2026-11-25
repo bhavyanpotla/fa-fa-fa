@@ -1,0 +1,17 @@
+# Secrets — never commit. Copy .env.example to .env locally, or set the variable
+# in the Netlify dashboard. The key must never appear in a tracked file.
+.env
+.env.local
+.env.*.local
+
+# Probe output (contains no secrets, but it is generated)
+voices.probe.json
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/

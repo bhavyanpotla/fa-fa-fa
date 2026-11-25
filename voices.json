@@ -1,0 +1,129 @@
+{
+  "verified_at": "2026-11-25",
+  "note": "Every entry below returned HTTP 200 with audio from the live API. Standard voices are bulbul:v3 and work on all five languages; native voices are bulbul:v4-flash personas and only exist for one language each.",
+  "default": {
+    "hi-IN": "ishita",
+    "ta-IN": "ishita",
+    "te-IN": "ishita",
+    "en-IN": "ishita",
+    "bn-IN": "ishita"
+  },
+  "voices": [
+    {
+      "id": "ishita",
+      "label": "Ishita",
+      "gender": "female",
+      "model": "bulbul:v3",
+      "style": "warm, clear",
+      "languages": [
+        "hi-IN",
+        "ta-IN",
+        "te-IN",
+        "en-IN",
+        "bn-IN"
+      ]
+    },
+    {
+      "id": "ritu",
+      "label": "Ritu",
+      "gender": "female",
+      "model": "bulbul:v3",
+      "style": "bright, even pace",
+      "languages": [
+        "hi-IN",
+        "ta-IN",
+        "te-IN",
+        "en-IN",
+        "bn-IN"
+      ]
+    },
+    {
+      "id": "shubh",
+      "label": "Shubh",
+      "gender": "male",
+      "model": "bulbul:v3",
+      "style": "steady narrator",
+      "languages": [
+        "hi-IN",
+        "ta-IN",
+        "te-IN",
+        "en-IN",
+        "bn-IN"
+      ]
+    },
+    {
+      "id": "aditya",
+      "label": "Aditya",
+      "gender": "male",
+      "model": "bulbul:v3",
+      "style": "lower, calmer",
+      "languages": [
+        "hi-IN",
+        "ta-IN",
+        "te-IN",
+        "en-IN",
+        "bn-IN"
+      ]
+    },
+    {
+      "id": "kavya_hi_conversational",
+      "label": "Kavya",
+      "gender": "female",
+      "model": "bulbul:v4-flash",
+      "style": "native Hindi, conversational",
+      "languages": [
+        "hi-IN"
+      ]
+    },
+    {
+      "id": "aravind_ta_ads",
+      "label": "Aravind",
+      "gender": "male",
+      "model": "bulbul:v4-flash",
+      "style": "native Tamil",
+      "languages": [
+        "ta-IN"
+      ]
+    },
+    {
+      "id": "kavitha_te_conversation",
+      "label": "Kavitha",
+      "gender": "female",
+      "model": "bulbul:v4-flash",
+      "style": "native Telugu, conversational",
+      "languages": [
+        "te-IN"
+      ]
+    },
+    {
+      "id": "aparna_en_edtech",
+      "label": "Aparna",
+      "gender": "female",
+      "model": "bulbul:v4-flash",
+      "style": "native English, classroom",
+      "languages": [
+        "en-IN"
+      ]
+    },
+    {
+      "id": "arnab_bn_conversation",
+      "label": "Arnab",
+      "gender": "male",
+      "model": "bulbul:v4-flash",
+      "style": "native Bengali",
+      "languages": [
+        "bn-IN"
+      ]
+    },
+    {
+      "id": "roopa_bn_conversational",
+      "label": "Roopa",
+      "gender": "female",
+      "model": "bulbul:v4-flash",
+      "style": "native Bengali",
+      "languages": [
+        "bn-IN"
+      ]
+    }
+  ]
+}
